@@ -107,7 +107,7 @@ function change_step(app_token, user_id) {
   return new Promise(resolve => {
     const options = {
       "url": `https://api-mifit-cn2.huami.com/v1/data/band_data.json?&t=${$.t}`,
-      "body": `userid=${user_id.toString()}&last_sync_data_time=${$.t- randomNum(5 * 60 * 1000)}&device_type=0&last_deviceid=${randomUUID({formatData: "X".repeat(16)})}&data_json=${dataJSON}`,
+      "body": `userid=${user_id.toString()}&last_sync_data_time=${$.t- randomNum(1 * 60 * 1000, 5 * 60 * 1000)}&device_type=0&last_deviceid=${randomUUID({formatData: "X".repeat(16)})}&data_json=${dataJSON}`,
       "headers": {
         "Content-Type":"application/x-www-form-urlencoded;charset=UTF-8",
         "apptoken": app_token,
