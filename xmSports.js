@@ -101,13 +101,14 @@ function change_step(app_token, user_id) {
   const ttf = dataJSON.match(/.*?ttl%5C%22%3A(.*?)%2C%5C%22dis.*?/)[1];
   dataJSON = dataJSON.replace(date, timeFormat(localtime()));
   dataJSON = dataJSON.replace(ttf, step.toString());
-  dataJSON = dataJSON.replace(/st%5C%22%3A\d+?/g, `st%5C%22%3A${$.t}`)
-  dataJSON = dataJSON.replace(/st%5C%22%3A\d+?/g, `st%5C%22%3A${$.t}`)
+  let lastUpdateTime = $.t - randomNum(1 * 60 * 1000, 5 * 60 * 1000)
+  dataJSON = dataJSON.replace(/st%5C%22%3A\d+?/g, `st%5C%22%3A${lastUpdateTime}`)
+  dataJSON = dataJSON.replace(/st%5C%22%3A\d+?/g, `st%5C%22%3A${lastUpdateTime}`)
   console.log(timeFormat(localtime()))
   return new Promise(resolve => {
     const options = {
       "url": `https://api-mifit-cn2.huami.com/v1/data/band_data.json?&t=${$.t}`,
-      "body": `userid=${user_id.toString()}&last_sync_data_time=${$.t- randomNum(1 * 60 * 1000, 5 * 60 * 1000)}&device_type=0&last_deviceid=${randomUUID({formatData: "X".repeat(16)})}&data_json=${dataJSON}`,
+      "body": `userid=${user_id.toString()}&last_sync_data_time=${lastUpdateTime}&device_type=0&last_deviceid=${randomUUID({formatData: "X".repeat(16)})}&data_json=${dataJSON}`,
       "headers": {
         "Content-Type":"application/x-www-form-urlencoded;charset=UTF-8",
         "apptoken": app_token,
